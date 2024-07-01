@@ -1,4 +1,14 @@
 version: "2"
+
+x-mautic-volumes: &mautic-volumes
+  - mautic-web:/var/www/html
+  - ./cron.d/mautic:/etc/cron.d/mautic
+  # - ./mautic/config:/var/www/html/config:z
+  # - ./mautic/logs:/var/www/html/var/logs:z
+  # - ./mautic/media/files:/var/www/html/docroot/media/files:z
+  # - ./mautic/media/images:/var/www/html/docroot/media/images:z
+  # - ./cron:/opt/mautic/cron:z
+
 services:
   mautic:
     restart: unless-stopped
@@ -12,8 +22,10 @@ services:
       MAUTIC_DB_USER: mautic
       MAUTIC_DB_PASSWORD: mauticdbpass
       MAUTIC_TRUSTED_PROXIES: '["0.0.0.0/0"]'
-    volumes:
-      - mautic-web:/var/www/html
+    # volumes:
+    # - mautic-web:/var/www/html
+    # - ./cron.d:/etc/cron.d
+    volumes: *mautic-volumes
 
   mysql:
     restart: unless-stopped
