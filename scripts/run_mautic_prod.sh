@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Define the source file
-SOURCE_FILE="../conf/mautic_env.txt"
+SOURCE_FILE="../../conf/mautic_env.txt"
 
 # Define the destination symlink in the current directory
-DESTINATION_FILE="./.env"
+DESTINATION_FILE="../.env"
 
 # Check if the source file exists
 if [ ! -f "$SOURCE_FILE" ]; then
