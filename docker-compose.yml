@@ -18,9 +18,9 @@ services:
     ports:
       - "80:80"
     environment:
-      MAUTIC_DB_HOST: mysql
-      MAUTIC_DB_USER: mautic
-      MAUTIC_DB_PASSWORD: mauticdbpass
+      MAUTIC_DB_HOST: ${MAUTIC_DB_HOST}
+      MAUTIC_DB_USER: ${MAUTIC_DB_USER}
+      MAUTIC_DB_PASSWORD: ${MAUTIC_DB_PASSWORD}
       MAUTIC_TRUSTED_PROXIES: '["0.0.0.0/0"]'
     # volumes:
     # - mautic-web:/var/www/html
@@ -31,10 +31,10 @@ services:
     restart: unless-stopped
     image: mariadb:10.5.8
     environment:
-      MYSQL_ROOT_PASSWORD: mysqlrootpassword
-      MYSQL_DATABASE: mautic
-      MYSQL_USER: mautic
-      MYSQL_PASSWORD: mauticdbpass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql:/var/lib/mysql
 
