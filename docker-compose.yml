@@ -19,6 +19,7 @@ services:
       - "80:80"
     environment:
       MAUTIC_DB_HOST: ${MAUTIC_DB_HOST}
+      MAUTIC_DB_NAME: ${MAUTIC_DB_NAME}
       MAUTIC_DB_USER: ${MAUTIC_DB_USER}
       MAUTIC_DB_PASSWORD: ${MAUTIC_DB_PASSWORD}
       MAUTIC_TRUSTED_PROXIES: '["0.0.0.0/0"]'
