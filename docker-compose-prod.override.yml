@@ -4,6 +4,6 @@ services:
   nginx:
     volumes:
       - ./nginx-prod.conf:/etc/nginx/conf.d/default.conf
-      - /etc/letsencrypt/live/mautic.mylegalfidelity.com:/etc/letsencrypt/live/mautic.mylegalfidelity.com
+      - /home/ubuntu/ssl-certs:/etc/ssl-certs
     command: |
       "exec nginx -g 'daemon off;'"
