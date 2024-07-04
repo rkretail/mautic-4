@@ -6,13 +6,19 @@ CONFIG_FILE="/var/www/html/app/config/local.php"
 # Path to the file that stores the last used index
 INDEX_FILE="/var/www/html/app/config/last_mailer_index.txt"
 
-# Define an array of mailer settings
-# Format: "from_name from_email transport host port user password encryption reply_to_email return_path"
+# Path to the environment file with mailer settings
+ENV_FILE="/var/scripts/mailer_settings.env"
+
+# Source the environment file to load the mailer settings
+source "$ENV_FILE"
+
+# Define an array of mailer settings from the environment variables
 MAILER_SETTINGS=(
-  "Sender1 sender1@example.com smtp smtp.office365.com 587 user1 pass1 tls replyto1@example.com returnpath1@example.com"
-  "Sender2 sender2@example.com smtp smtp.gmail.com 587 user2 pass2 tls replyto2@example.com returnpath2@example.com"
-  "Sender3 sender3@example.com smtp smtp.mail.yahoo.com 465 user3 pass3 ssl replyto3@example.com returnpath3@example.com"
+  "$MAILER_SETTINGS_1"
+  "$MAILER_SETTINGS_2"
+  "$MAILER_SETTINGS_3"
 )
+
 
 # Get the number of mailer settings
 NUM_SETTINGS=${#MAILER_SETTINGS[@]}
