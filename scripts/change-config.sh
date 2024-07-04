@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Path to the local.php file
-CONFIG_FILE="app/config/local.php"
+CONFIG_FILE="/var/www/html/app/config/local.php"
 
 # Path to the file that stores the last used index
-INDEX_FILE="app/config/last_mailer_index.txt"
+INDEX_FILE="/var/www/html/app/config/last_mailer_index.txt"
 
 # Define an array of mailer settings
 # Format: "from_name from_email transport host port user password encryption reply_to_email return_path"
