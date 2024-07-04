@@ -12,12 +12,26 @@ ENV_FILE="/var/scripts/mailer_settings.env"
 # Source the environment file to load the mailer settings
 source "$ENV_FILE"
 
-# Define an array of mailer settings from the environment variables
-MAILER_SETTINGS=(
-  "$MAILER_SETTINGS_1"
-  "$MAILER_SETTINGS_2"
-  "$MAILER_SETTINGS_3"
-)
+# # Define an array of mailer settings from the environment variables
+# MAILER_SETTINGS=(
+#   "$MAILER_SETTINGS_1"
+#   "$MAILER_SETTINGS_2"
+#   "$MAILER_SETTINGS_3"
+# )
+
+# Create an empty array for mailer settings
+MAILER_SETTINGS=()
+
+# Loop through the environment variables to find mailer settings
+i=1
+while true; do
+  eval "SETTING=\$MAILER_SETTINGS_$i"
+  if [ -z "$SETTING" ]; then
+    break
+  fi
+  MAILER_SETTINGS+=("$SETTING")
+  ((i++))
+done
 
 
 # Get the number of mailer settings
