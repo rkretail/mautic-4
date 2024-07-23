@@ -1,0 +1,17 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "devUp": "sudo docker compose up -d",
+    "devDown": "sudo docker compose down",
+    "prodUp": "sudo docker compose -f docker-compose.yml -f docker-compose-prod.override.yml  up -d",
+    "prodDown": "sudo docker compose -f docker-compose.yml -f docker-compose-prod.override.yml  down",
+    "prodSetup": "cd scripts && ./setup_mautic_prod.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
