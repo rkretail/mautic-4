@@ -65,6 +65,12 @@ MAILER_ENCRYPTION=$(echo $SELECTED_SETTING | awk '{print $8}')
 MAILER_REPLY_TO_EMAIL=$(echo $SELECTED_SETTING | awk '{print $9}')
 MAILER_RETURN_PATH=$(echo $SELECTED_SETTING | awk '{print $10}')
 
+# Extract the domain from the mailer_from_email (e.g., example.com from sender3@example.com)
+MAILER_DOMAIN=$(echo $MAILER_FROM_EMAIL | awk -F'@' '{print $2}')
+
+# Create the new site_url using the domain
+SITE_URL="mailer.$MAILER_DOMAIN"
+
 # Backup the original local.php file
 cp "$CONFIG_FILE" "$CONFIG_FILE.bak"
 
@@ -80,5 +86,9 @@ sed -i "s/'mailer_encryption' => '.*'/'mailer_encryption' => '$MAILER_ENCRYPTION
 sed -i "s/'mailer_reply_to_email' => '.*'/'mailer_reply_to_email' => '$MAILER_REPLY_TO_EMAIL'/g" "$CONFIG_FILE"
 sed -i "s/'mailer_return_path' => '.*'/'mailer_return_path' => '$MAILER_RETURN_PATH'/g" "$CONFIG_FILE"
 
+# Update the site_url in the local.php file
+sed -i "s|'site_url' => '.*'|'site_url' => '$SITE_URL'|g" "$CONFIG_FILE"
+
 # Print a message indicating the changes were made
 echo "SMTP settings updated in $CONFIG_FILE to use $MAILER_HOST:$MAILER_PORT with user $MAILER_USER"
+echo "Site URL updated to $SITE_URL"
