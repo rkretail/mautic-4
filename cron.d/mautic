@@ -1,18 +1,22 @@
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-* * * * *     root   /var/scripts/change-config.sh > /var/log/cron.pipe 2>&1
-# * * * * *     www-data   echo 'pz' > /var/www/html/var/logs/cron_log_$(date +\%Y-\%m-\%d).log 2>&1
-8,23,38,52 * * * *     www-data   php /var/www/html/bin/console mautic:segments:update > /var/log/cron.pipe 2>&1
-       */5 * * * *     www-data   php /var/www/html/bin/console mautic:import > /var/log/cron.pipe 2>&1
-5,20,35,50 * * * *     www-data   php /var/www/html/bin/console mautic:campaigns:rebuild > /var/log/cron.pipe 2>&1
-2,17,32,47 * * * *     www-data   php /var/www/html/bin/console mautic:campaigns:trigger > /var/log/cron.pipe 2>&1
-0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:messages:send > /var/log/cron.pipe 2>&1
-0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:emails:send > /var/log/cron.pipe 2>&1
+#  Smart Segment Processing Script for Mautic  : https://www.youtube.com/watch?v=Ui-zGW7mYhE
+
+* * * * *     root   /var/scripts/mautic-cron.sh > /var/log/cron.pipe 2>&1
+# */5 * * * *     root php /var/www/html/bin/console mautic:import --limit=500 &&  php /var/www/html/bin/console mautic:segments:update --batch-limit=900 && php /var/www/html/bin/console mautic:campaigns:rebuild --batch-limit=100   > /var/log/cron.pipe 2>&1
+
+# * * * * *     root   /var/scripts/change-config.sh && php /var/www/html/bin/console mautic:campaigns:trigger --batch-limit=1 > /var/log/cron.pipe 2>&1
+# 8,23,38,52 * * * *     www-data   php /var/www/html/bin/console mautic:segments:update > /var/log/cron.pipe 2>&1
+       # */5 * * * *     www-data   php /var/www/html/bin/console mautic:import --limit=500 > /var/log/cron.pipe 2>&1
+# 5,20,35,50 * * * *     www-data   php /var/www/html/bin/console mautic:campaigns:rebuild > /var/log/cron.pipe 2>&1
+# 2,17,32,47 * * * *     www-data   php /var/www/html/bin/console mautic:campaigns:trigger > /var/log/cron.pipe 2>&1
+# 0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:messages:send > /var/log/cron.pipe 2>&1
+# 0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:emails:send > /var/log/cron.pipe 2>&1
 0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:email:fetch > /var/log/cron.pipe 2>&1
 0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:social:monitoring > /var/log/cron.pipe 2>&1
 0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:webhooks:process > /var/log/cron.pipe 2>&1
-0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:broadcasts:send > /var/log/cron.pipe 2>&1
+# 0,15,30,45 * * * *     www-data   php /var/www/html/bin/console mautic:broadcasts:send -l 1 > /var/log/cron.pipe 2>&1
          * 1 * * *     www-data   php /var/www/html/bin/console mautic:maintenance:cleanup --days-old=365 > /var/log/cron.pipe 2>&1
         0 4 15 * *     www-data   php /var/www/html/bin/console mautic:iplookup:download > /var/log/cron.pipe 2>&1
        */5 * * * *     www-data   php /var/www/html/bin/console mautic:reports:scheduler > /var/log/cron.pipe 2>&1
