@@ -37,6 +37,12 @@ done
 # Get the number of mailer settings
 NUM_SETTINGS=${#MAILER_SETTINGS[@]}
 
+# If there is only one mailer setting, exit the script early
+if [[ $NUM_SETTINGS -eq 1 ]]; then
+  echo "Only one mailer setting found. No need to rotate."
+  exit 0
+fi
+
 # Read the last used index from the file, default to -1 if the file does not exist
 if [[ -f "$INDEX_FILE" ]]; then
   LAST_INDEX=$(cat "$INDEX_FILE")
