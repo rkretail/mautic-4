@@ -4,6 +4,10 @@
 hour=$(date +%H)
 minute=$(date +%M)
 
+# Remove leading zero for arithmetic
+hour=$((10#$hour))
+minute=$((10#$minute))
+
 # Run the first cron job if the hour is divisible by 6 and minute is 0
 if (( hour % 6 == 0 && minute == 0)); then
     /var/scripts/change-config.sh && \
