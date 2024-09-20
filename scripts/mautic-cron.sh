@@ -8,8 +8,11 @@ minute=$(date +%M)
 hour=$((10#$hour))
 minute=$((10#$minute))
 
+# Calculate total minutes since midnight
+total_minutes=$((hour * 60 + minute))
+
 # Run the first cron job if the hour is divisible by 6 and minute is 0
-if (( hour % 6 == 0 && minute == 0)); then
+if (( total_minutes % 90 == 0 )); then
     /var/scripts/change-config.sh && \
     php /var/www/html/bin/console mautic:broadcasts:send -l 1 > /var/log/cron.pipe 2>&1
     # php /var/www/html/bin/console mautic:campaigns:trigger --batch-limit=1 > /var/log/cron.pipe 2>&1
